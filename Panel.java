@@ -34,9 +34,9 @@ class Panel extends JPanel {
           
         } else {
         
-          g.setColor(Color.YELLOW);
+          g.setColor(new Color(0, 0, 255 - (255 / grid[y][x])));
           g.fillRect(x * 110 + 30, y * 110 + 30, 100, 100);
-          g.setColor(Color.BLACK);
+          g.setColor(Color.WHITE);
           g.setFont(new Font("monospace", Font.PLAIN, 26));
           g.drawString(String.valueOf(grid[y][x]), x * 110 + 50, y * 110 + 90);
         
@@ -94,98 +94,22 @@ class Panel extends JPanel {
 
       case 'W':
       
-        for (int x = 0; x < grid.length; x++) {
-        
-          if (grid[0][x] == grid[1][x]) {
-             
-            grid[1][x] = 0;
-            grid[0][x] = grid[0][x] * 2;
-            
-          } else if (grid[1][x] == grid[2][x]) {
-           
-            grid[2][x] = 0;
-            grid[1][x] = grid[1][x] * 2;
-            
-          } else if (grid[2][x] == grid[3][x]) {
-           
-            grid[3][x] = 0;
-            grid[2][x] = grid[2][x] * 2;
-            
-          }
-          
-        }
+        updateUp();
         break;
         
       case 'A':  
       
-       for (int y = 0; y < grid.length; y++) {
-        
-        if (grid[y][0] == grid[y][1]) {
-           
-          grid[y][1] = 0;
-          grid[y][0] = grid[y][0] * 2;
-          
-        } else if (grid[y][1] == grid[y][2]) {
-         
-          grid[y][2] = 0;
-          grid[y][1] = grid[y][1] * 2;
-          
-        } else if (grid[y][2] == grid[y][3]) {
-         
-          grid[y][3] = 0;
-          grid[y][2] = grid[y][2] * 2;
-          
-        }
-        
-       }     
+       updateLeft();   
        break;   
         
       case 'S':
       
-        for (int x = 0; x < grid.length; x++) {
-        
-          if (grid[0][x] == grid[1][x]) {
-             
-            grid[0][x] = 0;
-            grid[1][x] = grid[1][x] * 2;
-            
-          } else if (grid[1][x] == grid[2][x]) {
-           
-            grid[1][x] = 0;
-            grid[2][x] = grid[2][x] * 2;
-            
-          } else if (grid[2][x] == grid[3][x]) {
-           
-            grid[2][x] = 0;
-            grid[3][x] = grid[3][x] * 2;
-            
-          }
-          
-        }       
+        updateDown();       
         break;   
          
       case 'D':
         
-        for (int y = 0; y < grid.length; y++) {
-        
-          if (grid[y][0] == grid[y][1]) {
-           
-            grid[y][0] = 0;
-            grid[y][1] = grid[y][1] * 2;
-            
-          } else if (grid[y][1] == grid[y][2]) {
-           
-            grid[y][1] = 0;
-            grid[y][2] = grid[y][2] * 2;
-            
-          } else if (grid[y][2] == grid[y][3]) {
-           
-            grid[y][2] = 0;
-            grid[y][3] = grid[y][3] * 2;
-            
-          }
-        
-        }      
+        updateRight();     
         break;    
     
     }
@@ -193,5 +117,221 @@ class Panel extends JPanel {
     addTile(grid);
   
   }
+  
+  private void updateUp() {
+  	
+  	for (int x = 0; x < grid[0].length; x++) {
+        
+      if (grid[0][x] == grid[1][x]) {
+         
+        grid[1][x] = 0;
+        grid[0][x] = grid[0][x] * 2;
+        
+      }
+      
+      if (grid[1][x] == grid[2][x]) {
+       
+        grid[2][x] = 0;
+        grid[1][x] = grid[1][x] * 2;
+        
+      }
+      
+      if (grid[2][x] == grid[3][x]) {
+       
+        grid[3][x] = 0;
+        grid[2][x] = grid[2][x] * 2;
+        
+      }
+      
+    }
+    
+    for (int x = 0; x < grid[0].length; x++) {
+        
+      if (grid[0][x] == 0 && grid[1][x] > 0) {
 
+		    grid[0][x] = grid[1][x];         
+        grid[1][x] = 0;    
+        
+      }
+      
+      if (grid[1][x] == 0 && grid[2][x] > 0) {
+
+		    grid[1][x] = grid[2][x];         
+        grid[2][x] = 0;    
+        
+      }
+      
+      if (grid[2][x] == 0 && grid[3][x] > 0) {
+
+	    	grid[2][x] = grid[3][x];         
+        grid[3][x] = 0;    
+        
+      }		
+      
+    }
+  	
+  }
+  
+  private void updateLeft() {
+  	
+  	for (int y = 0; y < grid.length; y++) {
+        
+      if (grid[y][0] == grid[y][1]) {
+         
+        grid[y][1] = 0;
+        grid[y][0] = grid[y][0] * 2;
+          
+      }
+        
+      if (grid[y][1] == grid[y][2]) {
+         
+        grid[y][2] = 0;
+        grid[y][1] = grid[y][1] * 2;
+          
+      }
+      
+      if (grid[y][2] == grid[y][3]) {
+         
+        grid[y][3] = 0;
+        grid[y][2] = grid[y][2] * 2;
+          
+      }
+        
+    } 
+      
+    for (int y = 0; y < grid.length; y++) {
+        
+      if (grid[y][0] == 0 && grid[y][1] > 0) {
+         
+        grid[y][0] = grid[y][1];
+        grid[y][1] = 0;
+          
+      }
+        
+      if (grid[y][1] == 0 && grid[y][2] > 0) {
+         
+        grid[y][1] = grid[y][2];
+        grid[y][2] = 0;
+          
+      }
+      
+      if (grid[y][2] == 0 && grid[y][3] > 0) {
+         
+        grid[y][2] = grid[y][3];
+        grid[y][3] = 0;
+          
+      }
+        
+    } 
+    	
+  }
+  
+  private void updateDown() {
+    
+    for (int x = 0; x < grid[0].length; x++) {
+        
+      if (grid[0][x] == grid[1][x]) {
+         
+        grid[0][x] = 0;
+        grid[1][x] = grid[1][x] * 2;
+        
+      }
+      
+      if (grid[1][x] == grid[2][x]) {
+       
+        grid[1][x] = 0;
+        grid[2][x] = grid[2][x] * 2;
+        
+      }
+      
+      if (grid[2][x] == grid[3][x]) {
+       
+        grid[2][x] = 0;
+        grid[3][x] = grid[3][x] * 2;
+        
+      }
+      
+    }
+    
+    for (int x = 0; x < grid[0].length; x++) {
+        
+      if (grid[0][x] > 0 && grid[1][x] == 0) {
+         
+        grid[1][x] = grid[0][x];
+        grid[0][x] = 0;
+        
+      }
+      
+      if (grid[1][x] > 0 && grid[2][x] == 0) {
+         
+        grid[2][x] = grid[1][x];
+        grid[1][x] = 0;
+        
+      }
+      
+      if (grid[2][x] > 0 && grid[3][x] == 0) {
+         
+        grid[3][x] = grid[2][x];
+        grid[2][x] = 0;
+        
+      }
+      
+    }
+    
+  }
+  
+  private void updateRight() {
+   
+    for (int y = 0; y < grid.length; y++) {
+        
+      if (grid[y][0] == grid[y][1]) {
+       
+        grid[y][0] = 0;
+        grid[y][1] = grid[y][1] * 2;
+        
+      }
+      
+      if (grid[y][1] == grid[y][2]) {
+       
+        grid[y][1] = 0;
+        grid[y][2] = grid[y][2] * 2;
+        
+      }
+      
+      if (grid[y][2] == grid[y][3]) {
+       
+        grid[y][2] = 0;
+        grid[y][3] = grid[y][3] * 2;
+        
+      }
+    
+    }
+    
+    for (int y = 0; y < grid.length; y++) {
+        
+      if (grid[y][0] > 0 && grid[y][1] == 0) {
+
+        grid[y][1] = grid[y][0];       
+        grid[y][0] = 0;    
+        
+      }
+      
+      if (grid[y][1] > 0 && grid[y][2] == 0) {
+
+        grid[y][2] = grid[y][1];       
+        grid[y][1] = 0;    
+        
+      }
+      
+      if (grid[y][2] > 0 && grid[y][3] == 0) {
+
+        grid[y][3] = grid[y][2];       
+        grid[y][2] = 0;    
+        
+      }
+    
+    } 
+    
+  }
+  
 }
